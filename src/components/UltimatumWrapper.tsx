@@ -1,17 +1,26 @@
-import React from 'react';
+"use client"
+import React, {useContext} from 'react';
 import {Panel} from "./Panel";
+import Loading from "@/components/Loading";
+import {PanelContext} from "@/context/PanelContext";
 
 export const UltimatumWrapper : React.FC = ({children}) => {
+    const {loading} = useContext(PanelContext);
+
+
     return <div
-        className="
+            className="
             w-[100vw]
             h-[100vh]
             text-[0.9rem]
             lg:text-md
             relative
-            fira-mono-medium"
+            fira-mono-medium
+            relative
+            "
         style={{zIndex: 9}}>
         {children}
         <Panel/>
+        <Loading show={loading} />
     </div>
 }

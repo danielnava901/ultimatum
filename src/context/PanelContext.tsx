@@ -2,6 +2,7 @@
 
 import React, {createContext, useEffect, useState} from "react";
 import useGetActivityData from "@/hooks/useGetActivityData";
+import {getActivityDayRequest} from "@/apiRequests/activityRequest";
 
 type PanelContextType = {
     show: boolean,
@@ -9,7 +10,9 @@ type PanelContextType = {
     currentDay: number|null,
     setCurrentDay: any,
     activityData: any,
-    activityPerDay: any
+    activityPerDay: any,
+    loading: boolean,
+    setLoading: any
 }
 
 export const PanelContext = createContext<PanelContextType>({
@@ -18,26 +21,23 @@ export const PanelContext = createContext<PanelContextType>({
     currentDay: null,
     setCurrentDay: () => {},
     activityData: () => {},
-    activityPerDay: []
+    activityPerDay: [],
+    loading: false,
+    setLoading: () => {}
 });
 
 export const PanelProvider = ({children}) => {
     const [show, setShow] = useState(false);
     const [currentDay, setCurrentDay] = useState(null);
     const [activityPerDay, setActivityPerDay] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const activityData = (day) => {
-        console.log("context activity data");
         return useGetActivityData(day);
     };
 
     const getActivityDay = async () => {
-        let response = await fetch("/api/getActivityDay", {
-            method: "POST",
-            body: JSON.stringify({day: currentDay})
-        });
-        let {data: {data}} = await response.json();
-
+        let data = await getActivityDayRequest(currentDay)
         setActivityPerDay(data);
     }
 
@@ -54,7 +54,9 @@ export const PanelProvider = ({children}) => {
             currentDay,
             setCurrentDay,
             activityData,
-            activityPerDay
+            activityPerDay,
+            loading,
+            setLoading
         }}>
         {children}
     </PanelContext.Provider>

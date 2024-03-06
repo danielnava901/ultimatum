@@ -1,57 +1,19 @@
 import React from 'react';
 import {
-    dayOfYear,
-    daysOfYear,
-    endDateEF,
     livingInNz,
     secondVacation,
-    startEFDate,
-    todayToLocalStr,
     vacation
 } from "@/util/constants";
 import {Day} from "@/components/Day";
 import {PanelProvider} from "@/context/PanelContext";
 import {UltimatumWrapper} from "@/components/UltimatumWrapper";
-import {getActivities, getActivityTpes} from "@/repository/activityRepository";
-
-async function getData() {
-    const today = new Date()
-    const todayText = todayToLocalStr()
-    const startEFDateDayOfYear = dayOfYear(new Date(startEFDate));
-    const endDateEFDayOfYear = dayOfYear(new Date(endDateEF));
-    const todayDayOfYear = dayOfYear(today);
-    const daysArray = new Array(daysOfYear).fill(0);
-
-
-    const activities = await getActivities();
-    const activityTypes = await getActivityTpes();
-
-    activities.data.map((activityPerDay, index) => {
-        let dayMap = daysArray[activityPerDay.day_num - 1];
-        if(dayMap !== 0) {
-            let mapi = dayMap.get(activityPerDay.day_num)
-            let activities = [...mapi, activityPerDay.activity_type_id];
-            dayMap.set(activityPerDay.day_num, activities);
-        }else {
-            dayMap = new Map();
-            dayMap.set(activityPerDay.day_num, [activityPerDay.activity_type_id])
-            daysArray[activityPerDay.day_num - 1] = dayMap;
-        }
-    });
-
-
-    return {
-        todayText,
-        startEFDateDayOfYear,
-        endDateEFDayOfYear,
-        todayDayOfYear,
-        daysArray,
-        activityTypes: activityTypes.data
-    };
-}
+import {
+    getUltimatumDataRepository
+} from "@/repository/activityRepository";
+import Loading from "@/components/Loading";
 
 export default async function Page() {
-    const data = await getData();
+    const data = await getUltimatumDataRepository()
     const {
         todayText,
         startEFDateDayOfYear,
@@ -60,6 +22,7 @@ export default async function Page() {
         todayDayOfYear,
         activityTypes
     } = data;
+
 
     const divHidden = <div className="
         bg-lime-400
@@ -80,11 +43,15 @@ export default async function Page() {
                 </div>
                 <div className="p-2 mr-4 flex flex-col">
                     <div className="text-lg font-bold text-white">Dias restantes</div>
-                    <div className="text-xs font-bold text-white">{startEFDateDayOfYear - todayDayOfYear}</div>
+                    <div className="text-xs font-bold text-white">
+                        {startEFDateDayOfYear - todayDayOfYear}
+                    </div>
                 </div>
                 <div className="p-2 mr-4 flex flex-col">
                     <div className="text-lg font-bold text-white">Dias en NZ</div>
-                    <div className="text-xs font-bold text-white">{endDateEFDayOfYear + livingInNz - startEFDateDayOfYear}</div>
+                    <div className="text-xs font-bold text-white">
+                        {endDateEFDayOfYear + livingInNz - startEFDateDayOfYear}
+                    </div>
                 </div>
 
             </div>
@@ -150,5 +117,6 @@ export default async function Page() {
                 }
             </div>
         </UltimatumWrapper>
+
     </PanelProvider>
 }

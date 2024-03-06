@@ -2,13 +2,25 @@
 
 import React, {useContext} from "react";
 import {PanelContext} from "@/context/PanelContext";
+import {setActivityDayRequest} from "@/apiRequests/activityRequest";
+import { useRouter } from 'next/navigation';
+
 
 export default function ActivityType({type}) {
-    const {currentDay, activityPerDay} = useContext(PanelContext);
+    const router = useRouter();
+    const {currentDay, activityPerDay, setShow, setLoading} = useContext(PanelContext);
 
 
     const onClickActivity = async (activityType) => {
-        console.log(currentDay, "onclick!!!", activityType);
+        setLoading(true);
+        await setActivityDayRequest({
+            day: Number(currentDay),
+            activityTypeId: Number(activityType.id)
+        });
+        setLoading(false);
+        router.refresh();
+        setShow(false);
+        setTimeout(() => {setShow(true)}, 1);
     }
 
     return (
@@ -27,10 +39,6 @@ export default function ActivityType({type}) {
                 flex justify-center items-center ${type.bg_color}
             `}>
                 {activityPerDay.map((day, index) => {
-
-                    if(currentDay === 66 && day.activity_type_id === type.id) {
-                        console.log(day.day_num === currentDay && day.activity_type_id === type.id)
-                    }
 
                     return day.day_num === currentDay && day.activity_type_id === type.id ?
                         <svg

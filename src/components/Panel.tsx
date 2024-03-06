@@ -5,20 +5,20 @@ import {PanelContext} from "@/context/PanelContext";
 import {dayNumToDate} from "@/util/constants";
 import ActivityType from "@/components/ActivityType";
 import Loading from "@/components/Loading";
+import {getActivityTypesRequest} from "@/apiRequests/activityRequest";
 
 export const Panel : React.FC = ({children}) => {
-    const [loading, setLoading] = useState(false);
-    const {show, setShow, currentDay} = useContext(PanelContext);
+
+    const {show, setShow, currentDay, setLoading} = useContext(PanelContext);
     const [day, setDay] = useState('');
     const panelRef = useRef(null);
     const [activityTypes, setActivityTypes] = useState([]);
 
     const getActivityTypes = async () => {
-        let response = await fetch("/api/getActivityTypes", {
-            method: "POST"
-        });
-        let {data: {data}} = await response.json();
+        setLoading(true);
+        let data = await getActivityTypesRequest();
         setActivityTypes(data);
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -97,8 +97,6 @@ export const Panel : React.FC = ({children}) => {
                         }} />
 
                 </div>
-
-                <Loading show={loading} />
             </div>
         </div> : null
         }

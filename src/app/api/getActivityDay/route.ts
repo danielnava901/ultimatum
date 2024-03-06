@@ -7,7 +7,6 @@ export async function POST(request: Request) {
     const supabase = createClient(cookieStore);
 
     const {day} = await request.json();
-    console.log("DAY", day);
 
     let activity = await supabase
         .from("dnv_activity")
