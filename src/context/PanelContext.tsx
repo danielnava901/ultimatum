@@ -1,7 +1,6 @@
 "use client"
 
 import React, {createContext, useEffect, useState} from "react";
-import useGetActivityData from "@/hooks/useGetActivityData";
 import {getActivityDayRequest} from "@/apiRequests/activityRequest";
 
 type PanelContextType = {
@@ -33,7 +32,7 @@ export const PanelProvider = ({children}) => {
     const [loading, setLoading] = useState(false);
 
     const activityData = (day) => {
-        return useGetActivityData(day);
+        return [];
     };
 
     const getActivityDay = async () => {
