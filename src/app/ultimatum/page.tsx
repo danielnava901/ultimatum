@@ -11,7 +11,9 @@ const getData = async () => {
 
 export default async function Page() {
     const data = await getData()
-    console.log(data);
+
+    console.error("iniciando page");
+
     const {
         todayText,
         startEFDateDayOfYear,
@@ -20,6 +22,7 @@ export default async function Page() {
         todayDayOfYear,
         activityTypes
     } = data;
+    console.log({activityTypes});
 
     const divHidden = <div className="
         bg-lime-400
