@@ -25,13 +25,13 @@ export const PanelContext = createContext<PanelContextType>({
     setLoading: () => {}
 });
 
-export const PanelProvider = ({children}) => {
+export const PanelProvider = ({children} : {children: React.ReactNode}) => {
     const [show, setShow] = useState(false);
     const [currentDay, setCurrentDay] = useState(null);
     const [activityPerDay, setActivityPerDay] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const activityData = (day) => {
+    const activityData = (day: any) => {
         return [];
     };
 
