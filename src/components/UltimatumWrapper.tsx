@@ -16,7 +16,7 @@ const initData = {
     activityTypes: []
 };
 export default function UltimatumWrapper({children}: {children: React.ReactNode}) {
-    const {loading} = useContext(PanelContext);
+    const {loading, show} = useContext(PanelContext);
     const [data, setData] = useState(initData);
 
     const getData = async () => {
@@ -25,8 +25,10 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
     }
 
     useEffect(() => {
-        getData();
-    }, []);
+        if(!show) {
+            getData();
+        }
+    }, [show]);
 
     const {
         todayText,

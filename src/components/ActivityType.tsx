@@ -3,11 +3,9 @@
 import React, {useContext} from "react";
 import {PanelContext} from "@/context/PanelContext";
 import {setActivityDayRequest} from "@/apiRequests/activityRequest";
-import { useRouter } from 'next/navigation';
 
 
 export default function ActivityType({type}: any) {
-    const router = useRouter();
     const {currentDay, activityPerDay, setShow, setLoading} = useContext(PanelContext);
 
 
@@ -18,9 +16,7 @@ export default function ActivityType({type}: any) {
             activityTypeId: `${activityType.id}`
         });
         setLoading(false);
-        router.refresh();
         setShow(false);
-        setTimeout(() => {setShow(true)}, 1);
     }
 
     return (
