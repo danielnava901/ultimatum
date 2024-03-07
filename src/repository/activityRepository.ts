@@ -60,7 +60,7 @@ export const getUltimatumDataRepository = async () => {
     const activities = await getActivitiesRepository();
     const activityTypes = await getActivityTypesRepository();
 
-    activities.data.map((activityPerDay, index) => {
+    activities.data.map((activityPerDay: any, index: number) => {
         let dayMap = daysArray[activityPerDay.day_num - 1];
         if(dayMap !== 0) {
             let mapi = dayMap.get(activityPerDay.day_num)

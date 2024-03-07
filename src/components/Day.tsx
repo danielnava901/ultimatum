@@ -41,8 +41,8 @@ export const Day = (
 
     if(isNaN(dayActivities)) {
         activitiesCompleted = dayActivities.get(indexDay)
-        activityCircle = activitiesCompleted.map(dA => {
-            return activityTypes.map((aT: any, indexAT: any) => {
+        activityCircle = activitiesCompleted.map((dA: any) => {
+            return activityTypes.map((aT: any, indexAT: number) => {
                 let position : any = positions[`${dA}`];
 
                 if(dA === aT.id) {

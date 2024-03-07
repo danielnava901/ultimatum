@@ -77,7 +77,7 @@ export const Panel : React.FC = () => {
                 <div className="mb-4">Día: {currentDay} - {day}</div>
                 <div className="flex justify-between mb-4 flex flex-wrap mt-4">
                     {
-                        activityTypes.map((type, index) => {
+                        activityTypes.map((type: any, index: number) => {
                             return <ActivityType
                                 key={type.id}
                                 type={type}

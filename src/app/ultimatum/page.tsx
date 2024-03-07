@@ -56,7 +56,7 @@ export default async function Page() {
             </div>
             <div className="w-full flex flex-wrap">
                 {
-                    daysArray.map((dayActivities, index) => {
+                    daysArray.map((dayActivities: any, index : number) => {
                         let realIndex = index + 1;
                         /**
                          * Dias_pasados
