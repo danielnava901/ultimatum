@@ -11,8 +11,12 @@ import {
     getUltimatumDataRepository
 } from "@/repository/activityRepository";
 
+const getData = async () => {
+    return await getUltimatumDataRepository();
+}
+
 export default async function Page() {
-    const data = await getUltimatumDataRepository()
+    const data = await getData()
     const {
         todayText,
         startEFDateDayOfYear,
