@@ -11,6 +11,38 @@ type DayProps = {
     activityTypes: any
 }
 
+function getStyle(index: string) {
+    let position: any;
+
+    switch (index) {
+        case 'p_1':
+            position = { bottom: 0, left: 0};
+            break;
+        case 'p_2':
+            position = { top: "1.5rem", left: "-0.5rem"};
+            break;
+        case 'p_3':
+            position = { top: 0, left: 0};
+            break;
+        case 'p_4':
+            position = { top: "-0.5rem", left: "1.6rem"};
+            break;
+        case 'p_5':
+            position = { top: 0, right: 0};
+            break;
+        case 'p_6':
+            position = { top: "1.5rem", right: "-0.5rem"};
+            break;
+        case 'p_7':
+            position = { bottom: 0, right: 0};
+            break;
+        default:
+            position = { bottom: 0, left: 0};
+    }
+
+    return position;
+}
+
 export const Day = (
     {
         className,
@@ -29,21 +61,11 @@ export const Day = (
     let activitiesCompleted : any = 0;
     let activityCircle = <div></div>;
 
-    let positions = {
-        p_1: { bottom: 0, left: 0},
-        p_2: { top: "1.5rem", left: "-0.5rem"},
-        p_3: { top: 0, left: 0},
-        p_4: { top: "-0.5rem", left: "1.6rem"},
-        p_5: { top: 0, right: 0},
-        p_6: { top: "1.5rem", right: "-0.5rem"},
-        p_7: { bottom: 0, right: 0}
-    }
-
     if(isNaN(dayActivities)) {
         activitiesCompleted = dayActivities.get(indexDay)
         activityCircle = activitiesCompleted.map((dA: string) => {
             return activityTypes.map((aT: any, indexAT: number) => {
-                let position : any = positions[`p_${dA}`];
+                let position : any = getStyle(`p_${dA}`);
 
                 if(dA === `${aT.id}`) {
                     return <div
