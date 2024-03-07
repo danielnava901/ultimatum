@@ -14,8 +14,8 @@ export default function ActivityType({type}) {
     const onClickActivity = async (activityType) => {
         setLoading(true);
         await setActivityDayRequest({
-            day: Number(currentDay),
-            activityTypeId: Number(activityType.id)
+            day: `${currentDay}`,
+            activityTypeId: `${activityType.id}`
         });
         setLoading(false);
         router.refresh();
