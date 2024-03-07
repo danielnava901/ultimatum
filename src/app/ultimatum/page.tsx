@@ -1,21 +1,17 @@
 import React from 'react';
-import {
-    livingInNz,
-    secondVacation,
-    vacation
-} from "@/util/constants";
+import {livingInNz, secondVacation, vacation} from "@/util/constants";
 import {Day} from "@/components/Day";
 import {PanelProvider} from "@/context/PanelContext";
 import {UltimatumWrapper} from "@/components/UltimatumWrapper";
 import {getUltimatumDataRepository} from "@/repository/activityRepository";
 
 const getData = async () => {
-    let result = await getUltimatumDataRepository();
-   return result;
+    return await getUltimatumDataRepository();
 }
 
 export default async function Page() {
     const data = await getData()
+    console.log(data);
     const {
         todayText,
         startEFDateDayOfYear,

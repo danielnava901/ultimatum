@@ -7,7 +7,6 @@ import {PanelContext} from "@/context/PanelContext";
 export const UltimatumWrapper = ({children}: {children: React.ReactNode}) => {
     const {loading} = useContext(PanelContext);
 
-
     return <div
             className="
             w-[100vw]
