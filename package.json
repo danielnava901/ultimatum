@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@alptugidin/react-circular-progress-bar": "^1.1.2",
     "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.39.7",
     "next": "14.1.2",
