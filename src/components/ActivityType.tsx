@@ -11,7 +11,7 @@ export default function ActivityType({type}: any) {
     const {currentDay, activityPerDay, setShow, setLoading} = useContext(PanelContext);
 
 
-    const onClickActivity = async (activityType) => {
+    const onClickActivity = async (activityType: any) => {
         setLoading(true);
         await setActivityDayRequest({
             day: `${currentDay}`,
