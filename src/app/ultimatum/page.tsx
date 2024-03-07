@@ -7,16 +7,12 @@ import {
 import {Day} from "@/components/Day";
 import {PanelProvider} from "@/context/PanelContext";
 import {UltimatumWrapper} from "@/components/UltimatumWrapper";
-import {
-    getUltimatumDataRepository
-} from "@/repository/activityRepository";
+import {getUltimatumeRequest} from "@/apiRequests/activityRequest";
 
-const getData = async () => {
-    return await getUltimatumDataRepository();
-}
+
 
 export default async function Page() {
-    const data = await getData()
+    const data = await getUltimatumeRequest()
     const {
         todayText,
         startEFDateDayOfYear,
@@ -25,7 +21,6 @@ export default async function Page() {
         todayDayOfYear,
         activityTypes
     } = data;
-
 
     const divHidden = <div className="
         bg-lime-400

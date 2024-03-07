@@ -29,3 +29,12 @@ export const getActivityTypesRequest = async () => {
 
     return data;
 }
+
+export const getUltimatumeRequest = async () => {
+    let response = await fetch("/api/ultimatum", {
+        method: "POST"
+    });
+    let {data: {data}} = await response.json();
+
+    return data;
+}
