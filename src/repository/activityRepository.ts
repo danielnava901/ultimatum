@@ -60,21 +60,22 @@ export const getUltimatumDataRepository = async () => {
     const activities = await getActivitiesRepository();
     const activityTypes = await getActivityTypesRepository();
 
+
     if(!!activities && !!activities.data) {
         activities.data.map((activityPerDay: any, index: number) => {
+
             let dayMap = daysArray[activityPerDay.day_num - 1];
+
             if(dayMap !== 0) {
-                let mapi = dayMap.get(activityPerDay.day_num)
-                let activities = [...mapi, activityPerDay.activity_type_id];
-                dayMap.set(activityPerDay.day_num, activities);
+                let mapi = dayMap[activityPerDay.day_num];
+                dayMap[activityPerDay.day_num] = [...mapi, activityPerDay.activity_type_id];
             }else {
-                dayMap = new Map();
-                dayMap.set(activityPerDay.day_num, [activityPerDay.activity_type_id])
+                dayMap = {};
+                dayMap[activityPerDay.day_num] = [activityPerDay.activity_type_id];
                 daysArray[activityPerDay.day_num - 1] = dayMap;
             }
         });
     }
-
 
 
     return {

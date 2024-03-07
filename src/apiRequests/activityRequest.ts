@@ -34,23 +34,9 @@ export const getUltimatumeRequest = async () => {
     let response = await fetch("/api/ultimatum", {
         method: "POST"
     });
-
-    let {data: {data}} = await response.json();
-    const {
-        todayText,
-            startEFDateDayOfYear,
-            daysArray,
-            endDateEFDayOfYear,
-            todayDayOfYear,
-            activityTypes
-    } = data;
-
+    response = await response.json();
+    let {data} = response;
     return {
-        todayText,
-        startEFDateDayOfYear,
-        daysArray,
-        endDateEFDayOfYear,
-        todayDayOfYear,
-        activityTypes
+        ...data
     };
 }

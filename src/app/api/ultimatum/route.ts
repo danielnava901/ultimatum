@@ -1,8 +1,8 @@
 import {getUltimatumDataRepository} from "@/repository/activityRepository";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
 
-    let data = await getUltimatumDataRepository()
+    let data = await getUltimatumDataRepository();
     const {
         todayText,
         startEFDateDayOfYear,
