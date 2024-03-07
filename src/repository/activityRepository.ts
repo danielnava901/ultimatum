@@ -8,7 +8,7 @@ export const getActivitiesRepository = async () => {
         .select('id, activity_type_id, day_num');
 }
 
-export const getActivitiesByDayAndActivityRepository = async (day, activityTypeId) => {
+export const getActivitiesByDayAndActivityRepository = async (day: number, activityTypeId: number) => {
     return await supabaseClient
         .from('dnv_activity')
         .select('id, activity_type_id, day_num')
