@@ -4,7 +4,7 @@ import {Panel} from "./Panel";
 import Loading from "@/components/Loading";
 import {PanelContext} from "@/context/PanelContext";
 
-export const UltimatumWrapper : React.FC = ({children}) => {
+export const UltimatumWrapper = ({children}: {children: React.ReactNode}) => {
     const {loading} = useContext(PanelContext);
 
 

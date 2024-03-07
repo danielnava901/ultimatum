@@ -10,7 +10,6 @@ import {UltimatumWrapper} from "@/components/UltimatumWrapper";
 import {
     getUltimatumDataRepository
 } from "@/repository/activityRepository";
-import Loading from "@/components/Loading";
 
 export default async function Page() {
     const data = await getUltimatumDataRepository()

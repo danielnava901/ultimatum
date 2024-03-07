@@ -4,10 +4,9 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {PanelContext} from "@/context/PanelContext";
 import {dayNumToDate} from "@/util/constants";
 import ActivityType from "@/components/ActivityType";
-import Loading from "@/components/Loading";
 import {getActivityTypesRequest} from "@/apiRequests/activityRequest";
 
-export const Panel : React.FC = ({children}) => {
+export const Panel : React.FC = () => {
 
     const {show, setShow, currentDay, setLoading} = useContext(PanelContext);
     const [day, setDay] = useState('');
