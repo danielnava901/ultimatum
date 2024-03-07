@@ -35,6 +35,21 @@ export const getUltimatumeRequest = async () => {
         method: "POST"
     });
     let {data: {data}} = await response.json();
+    const {
+        todayText,
+            startEFDateDayOfYear,
+            daysArray,
+            endDateEFDayOfYear,
+            todayDayOfYear,
+            activityTypes
+    } = data;
 
-    return data;
+    return {
+        todayText,
+        startEFDateDayOfYear,
+        daysArray,
+        endDateEFDayOfYear,
+        todayDayOfYear,
+        activityTypes
+    };
 }
