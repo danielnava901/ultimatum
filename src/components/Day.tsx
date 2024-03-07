@@ -30,20 +30,20 @@ export const Day = (
     let activityCircle = <div></div>;
 
     let positions = {
-        "p-1": { bottom: 0, left: 0},
-        "p-2": { top: "1.5rem", left: "-0.5rem"},
-        "p-3": { top: 0, left: 0},
-        "p-4": { top: "-0.5rem", left: "1.6rem"},
-        "p-5": { top: 0, right: 0},
-        "p-6": { top: "1.5rem", right: "-0.5rem"},
-        "p-7": { bottom: 0, right: 0}
+        p_1: { bottom: 0, left: 0},
+        p_2: { top: "1.5rem", left: "-0.5rem"},
+        p_3: { top: 0, left: 0},
+        p_4: { top: "-0.5rem", left: "1.6rem"},
+        p_5: { top: 0, right: 0},
+        p_6: { top: "1.5rem", right: "-0.5rem"},
+        p_7: { bottom: 0, right: 0}
     }
 
     if(isNaN(dayActivities)) {
         activitiesCompleted = dayActivities.get(indexDay)
         activityCircle = activitiesCompleted.map((dA: any) => {
             return activityTypes.map((aT: any, indexAT: number) => {
-                let position : any = positions[`p-${dA}`];
+                let position : any = positions[`p_${dA}`];
 
                 if(dA === aT.id) {
                     return <div
