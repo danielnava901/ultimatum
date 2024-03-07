@@ -69,7 +69,7 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
             </div>
 
         </div>
-        <div className="w-full flex flex-wrap">
+        <div className="w-full flex flex-wrap justify-between">
             {
                 daysArray.map((dayActivities: any, index : number) => {
                     let realIndex = index + 1;
