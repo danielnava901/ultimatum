@@ -1,4 +1,4 @@
-const Loading = ({show}) => {
+const Loading = ({show} : {show: boolean}) => {
 
     return show ? <div className="
         w-screen

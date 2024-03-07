@@ -6,7 +6,7 @@ import {setActivityDayRequest} from "@/apiRequests/activityRequest";
 import { useRouter } from 'next/navigation';
 
 
-export default function ActivityType({type}) {
+export default function ActivityType({type}: any) {
     const router = useRouter();
     const {currentDay, activityPerDay, setShow, setLoading} = useContext(PanelContext);
 

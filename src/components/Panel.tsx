@@ -7,7 +7,6 @@ import ActivityType from "@/components/ActivityType";
 import {getActivityTypesRequest} from "@/apiRequests/activityRequest";
 
 export const Panel : React.FC = () => {
-
     const {show, setShow, currentDay, setLoading} = useContext(PanelContext);
     const [day, setDay] = useState('');
     const panelRef = useRef(null);

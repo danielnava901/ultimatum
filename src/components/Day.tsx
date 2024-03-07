@@ -10,9 +10,9 @@ export const Day = (
         indexDay,
         dayActivities,
         activityTypes
-    }) => {
+    }: any) => {
     const activityTypesLength = activityTypes.length
-    const {setCurrentDay, setShow, currentDay} = useContext(PanelContext);
+    const {setCurrentDay, setShow} = useContext(PanelContext);
     const dayText = dayNumToDateLocal(indexDay);
     const longPressEvent = () => {
         setCurrentDay(indexDay);
