@@ -38,7 +38,7 @@ export default function ActivityType({type}: any) {
                 border 
                 flex justify-center items-center ${type.bg_color}
             `}>
-                {activityPerDay.map((day, index) => {
+                {activityPerDay.map((day: any, index: number) => {
 
                     return day.day_num === currentDay && day.activity_type_id === type.id ?
                         <svg
