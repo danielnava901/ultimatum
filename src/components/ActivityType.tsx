@@ -32,6 +32,7 @@ export default function ActivityType({type}: any) {
         >
             <div>{type.name}</div>
             <div className={`
+                cursor-pointer
                 rounded-full 
                 h-16 
                 w-16 
