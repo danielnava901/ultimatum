@@ -26,7 +26,7 @@ export const Day = (
         setShow(true);
     }
 
-    let activitiesCompleted = 0;
+    let activitiesCompleted : any = 0;
     let activityCircle = <div></div>;
 
     let positions = {
@@ -68,6 +68,7 @@ export const Day = (
             });
         })
         activitiesCompleted = activitiesCompleted.length || 0;
+
     }
 
     return (<div className="w-16 h-16 flex justify-center items-center
