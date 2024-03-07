@@ -4,13 +4,20 @@ import React, {useContext} from 'react';
 import {dayNumToDateLocal} from "@/util/constants";
 import {PanelContext} from "@/context/PanelContext";
 
+type DayProps = {
+    className: string,
+    indexDay: number,
+    dayActivities: any,
+    activityTypes: any
+}
+
 export const Day = (
     {
         className,
         indexDay,
         dayActivities,
         activityTypes
-    }: any) => {
+    }: DayProps) => {
     const activityTypesLength = activityTypes.length
     const {setCurrentDay, setShow} = useContext(PanelContext);
     const dayText = dayNumToDateLocal(indexDay);
@@ -32,7 +39,7 @@ export const Day = (
         "7": { bottom: 0, right: 0}
     }
 
-    if(dayActivities !== 0) {
+    if(isNaN(dayActivities)) {
         activitiesCompleted = dayActivities.get(indexDay)
         activityCircle = activitiesCompleted.map(dA => {
             return activityTypes.map((aT, indexAT) => {
