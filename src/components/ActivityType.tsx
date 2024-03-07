@@ -16,6 +16,8 @@ export default function ActivityType({type}: any) {
             activityTypeId: `${activityType.id}`
         });
         setLoading(false);
+        setShow(false);
+        setTimeout(() => {setShow(true)}, 1);
     }
 
     return (
