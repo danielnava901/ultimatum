@@ -61,13 +61,14 @@ export const Day = (
     let activitiesCompleted : any = 0;
     let activityCircle = <div></div>;
 
+
     if(isNaN(dayActivities)) {
         activitiesCompleted = dayActivities.get(indexDay)
-        activityCircle = activitiesCompleted.map((dA: string) => {
+        activityCircle = activitiesCompleted.map((dA: number) => {
             return activityTypes.map((aT: any, indexAT: number) => {
                 let position : any = getStyle(`p_${dA}`);
 
-                if(dA === `${aT.id}`) {
+                if(dA === aT.id) {
                     return <div
                         key={indexAT}
                         className={`w-3 h-3 
@@ -80,14 +81,10 @@ export const Day = (
                         style={position}
                     ></div>
                 }else {
-                    return <div
-                        key={indexAT}
-                        className={`w-1 h-1 rounded-full absolute opacity-0`}
-                        style={position}
-                    ></div>
+                    return null
                 }
 
-            });
+            }).filter(item => !!item);
         })
         activitiesCompleted = activitiesCompleted.length || 0;
 

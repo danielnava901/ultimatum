@@ -7,12 +7,15 @@ import {
 import {Day} from "@/components/Day";
 import {PanelProvider} from "@/context/PanelContext";
 import {UltimatumWrapper} from "@/components/UltimatumWrapper";
-import {getUltimatumeRequest} from "@/apiRequests/activityRequest";
+import {getUltimatumDataRepository} from "@/repository/activityRepository";
 
-
+const getData = async () => {
+    let result = await getUltimatumDataRepository();
+   return result;
+}
 
 export default async function Page() {
-    const data = await getUltimatumeRequest()
+    const data = await getData()
     const {
         todayText,
         startEFDateDayOfYear,

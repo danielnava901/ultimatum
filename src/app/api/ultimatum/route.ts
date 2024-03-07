@@ -11,6 +11,7 @@ export async function GET(request: Request) {
         todayDayOfYear,
         activityTypes
     } = data;
+
     return Response.json({
         code: 200,
         data: {
