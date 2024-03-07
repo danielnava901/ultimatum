@@ -11,7 +11,7 @@ export const setActivityDayRequest = async (
     let {data: {data}} = await response.json();
 }
 
-export const getActivityDayRequest = async (day: string) => {
+export const getActivityDayRequest = async (day: number) => {
     let response = await fetch("/api/getActivityDay", {
         method: "POST",
         body: JSON.stringify({day: day})

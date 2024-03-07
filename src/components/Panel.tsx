@@ -24,8 +24,8 @@ export const Panel : React.FC = () => {
     }, []);
 
     useEffect(() => {
-        if(!isNaN(currentDay || 0)) {
-            setDay(dayNumToDate(currentDay || 0).toLocaleDateString());
+        if(!isNaN(currentDay)) {
+            setDay(dayNumToDate(currentDay).toLocaleDateString());
         }
     }, [show]);
 

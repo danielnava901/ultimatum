@@ -6,7 +6,7 @@ import {getActivityDayRequest} from "@/apiRequests/activityRequest";
 type PanelContextType = {
     show: boolean,
     setShow: any,
-    currentDay: number|null|string,
+    currentDay: number,
     setCurrentDay: any,
     activityData: any,
     activityPerDay: any,
@@ -17,7 +17,7 @@ type PanelContextType = {
 export const PanelContext = createContext<PanelContextType>({
     show: false,
     setShow: () => {},
-    currentDay: '',
+    currentDay: 0,
     setCurrentDay: () => {},
     activityData: () => {},
     activityPerDay: [],
@@ -27,7 +27,7 @@ export const PanelContext = createContext<PanelContextType>({
 
 export const PanelProvider = ({children} : {children: React.ReactNode}) => {
     const [show, setShow] = useState(false);
-    const [currentDay, setCurrentDay] = useState('');
+    const [currentDay, setCurrentDay] = useState(0);
     const [activityPerDay, setActivityPerDay] = useState([]);
     const [loading, setLoading] = useState(false);
 
