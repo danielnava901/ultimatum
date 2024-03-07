@@ -25,10 +25,10 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
     }
 
     useEffect(() => {
-        if(!show) {
+        if(!loading) {
             getData();
         }
-    }, [show]);
+    }, [loading]);
 
     const {
         todayText,
