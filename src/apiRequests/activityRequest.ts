@@ -8,7 +8,7 @@ export const setActivityDayRequest = async (
             activityTypeId
         })
     });
-    let {data: {data}} = await response.json();
+    let {data: {data}} : any = await response.json();
 }
 
 export const getActivityDayRequest = async (day: number) => {
@@ -16,7 +16,7 @@ export const getActivityDayRequest = async (day: number) => {
         method: "POST",
         body: JSON.stringify({day: day})
     });
-    let {data: {data}} = await response.json();
+    let {data: {data}} : any = await response.json();
 
     return data;
 }
@@ -25,7 +25,7 @@ export const getActivityTypesRequest = async () => {
     let response = await fetch("/api/getActivityTypes", {
         method: "POST"
     });
-    let {data: {data}} = await response.json();
+    let {data: {data}} : any = await response.json();
 
     return data;
 }
@@ -35,7 +35,7 @@ export const getUltimatumeRequest = async () => {
         method: "POST"
     });
     response = await response.json();
-    let {data} = response;
+    let {data} : any = response;
     return {
         ...data
     };
