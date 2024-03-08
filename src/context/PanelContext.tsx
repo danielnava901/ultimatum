@@ -25,7 +25,7 @@ export const PanelContext = createContext<PanelContextType>({
     setLoading: () => {}
 });
 
-export const PanelProvider = ({children} : {children: React.ReactNode}) => {
+export const UltimatumProvider = ({children} : {children: React.ReactNode}) => {
     const [show, setShow] = useState(false);
     const [currentDay, setCurrentDay] = useState(0);
     const [activityPerDay, setActivityPerDay] = useState([]);

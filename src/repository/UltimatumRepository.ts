@@ -1,5 +1,13 @@
 import {supabaseClient} from "@/util/supabase.client";
-import {dayOfYear, daysOfYear, endDateEF, startEFDate, todayToLocalStr} from "@/util/constants";
+import {
+    dayNumToDateLocal,
+    dayOfYear,
+    daysOfYear,
+    endDateEF,
+    startEFDate,
+    todayToLocalStr,
+    vacation
+} from "@/util/constants";
 
 
 export const getActivitiesRepository = async () => {
@@ -55,7 +63,8 @@ export const getUltimatumDataRepository = async () => {
     const endDateEFDayOfYear = dayOfYear(new Date(endDateEF));
     const todayDayOfYear = dayOfYear(today);
     const daysArray = new Array(daysOfYear).fill(0);
-
+    const flyingToChileDate = dayNumToDateLocal(startEFDateDayOfYear - vacation);
+    const flyingToNZDate = dayNumToDateLocal(startEFDateDayOfYear - 1);
 
     const activities = await getActivitiesRepository();
     const activityTypes = await getActivityTypesRepository();
@@ -84,6 +93,8 @@ export const getUltimatumDataRepository = async () => {
         endDateEFDayOfYear,
         todayDayOfYear,
         daysArray,
-        activityTypes: activityTypes.data
+        activityTypes: activityTypes.data,
+        flyingToChileDate,
+        flyingToNZDate
     };
 }

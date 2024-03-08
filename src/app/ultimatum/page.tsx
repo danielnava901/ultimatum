@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {livingInNz, secondVacation, vacation} from "@/util/constants";
-import {Day} from "@/components/Day";
-import {PanelProvider} from "@/context/PanelContext";
-import UltimatumWrapper from "@/components/UltimatumWrapper";
-import {getUltimatumDataRepository} from "@/repository/activityRepository";
+import {Day} from "@/app/ultimatum/Day";
+import {UltimatumProvider} from "@/context/PanelContext";
+import UltimatumWrapper from "@/app/ultimatum/UltimatumWrapper";
+import {getUltimatumDataRepository} from "@/repository/UltimatumRepository";
 
 const getData = async () => {
     return await getUltimatumDataRepository();
@@ -22,9 +22,9 @@ export default async function Page() {
         text-pink-700
         "></div>
 
-    return <PanelProvider>
+    return <UltimatumProvider>
         <UltimatumWrapper>
             &nbsp;
         </UltimatumWrapper>
-    </PanelProvider>
+    </UltimatumProvider>
 }

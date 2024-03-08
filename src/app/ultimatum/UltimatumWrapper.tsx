@@ -4,8 +4,9 @@ import {Panel} from "./Panel";
 import Loading from "@/components/Loading";
 import {PanelContext} from "@/context/PanelContext";
 import {getUltimatumeRequest} from "@/apiRequests/activityRequest";
-import {livingInNz, secondVacation, vacation} from "@/util/constants";
-import {Day} from "@/components/Day";
+import {dayNumToDateLocal, livingInNz, secondVacation, vacation} from "@/util/constants";
+import {Day} from "@/app/ultimatum/Day";
+import {BarChart} from "@mui/x-charts";
 
 const initData = {
     todayText: '',
@@ -16,7 +17,7 @@ const initData = {
     activityTypes: []
 };
 export default function UltimatumWrapper({children}: {children: React.ReactNode}) {
-    const {loading, show} = useContext(PanelContext);
+    const {loading} = useContext(PanelContext);
     const [data, setData] = useState(initData);
 
     const getData = async () => {
@@ -36,8 +37,26 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
         daysArray,
         endDateEFDayOfYear,
         todayDayOfYear,
-        activityTypes
+        activityTypes,
+        flyingToChileDate,
+        flyingToNZDate
     } = data;
+
+    const daysIndex = [];
+
+    const days = !!daysArray ?  daysArray.map((day: any, index) => {
+        if(day !== 0) {
+            return day[`${index + 1}`].length
+        }
+        return day;
+    }).filter((item, index) => {
+        if((index) > (todayDayOfYear - 5) && (index) < (todayDayOfYear + 5)) {
+            daysIndex.push(`${index} - ${dayNumToDateLocal(index)}`);
+            return true;
+        }
+        return false;
+    }): [];
+
 
     return <div
             className="
@@ -50,29 +69,69 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
             relative
             "
         style={{zIndex: 9}}>
-        <div className="w-full flex p-4 justify-between">
-            <div className="p-2 mr-4 flex flex-col">
-                <div className="text-lg font-bold text-white">Hoy es:</div>
-                <div className="text-xs font-bold text-white">{todayText}</div>
+        <div className="w-full flex justify-between">
+            <div className="flex flex-col grow text-white">
+                {
+                    daysArray.length > 0 ? <BarChart
+                        xAxis={[
+                            {
+                                id: 'barCategories',
+                                data: daysIndex,
+                                scaleType: 'band',
+                            },
+                        ]}
+                        series={[
+                            {
+                                data: days,
+                            },
+                        ]}
+                        height={200}
+                        sx={{
+                            "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
+                                fill:"#f2eaea",
+                                fontWeight: "bold",
+                                fontSize: "19px"
+                            },
+                        }}
+
+                    /> : null
+                }
             </div>
+        </div>
+        <div className="w-full flex px-4 justify-between">
             <div className="p-2 mr-4 flex flex-col">
-                <div className="text-lg font-bold text-white">Dias restantes</div>
-                <div className="text-xs font-bold text-white">
-                    {startEFDateDayOfYear - todayDayOfYear}
+                <div className="mr-4 flex items-center">
+                    <div className="font-bold text-white mr-4">Hoy es:</div>
+                    <div className="text-xs font-bold text-white">{todayText}</div>
+                </div>
+                <div className="mr-4 flex items-center">
+                    <span className="font-bold text-white mr-4">V a C:</span>
+                    <span className="text-xs font-bold text-white">{flyingToChileDate}</span>
+                    <span className="mx-4">Falta:</span>
+                    <span className="text-xs font-bold text-white">
+                        {startEFDateDayOfYear - todayDayOfYear - vacation}
+                    </span>
+                </div>
+                <div className="mr-4 flex items-center">
+                    <span className="font-bold text-white mr-4">V a N:</span>
+                    <span className="text-xs font-bold text-white">{flyingToNZDate}</span>
+                    <span className="mx-4">Falta:</span>
+                    <span className="text-xs font-bold text-white">
+                        {startEFDateDayOfYear - todayDayOfYear}
+                    </span>
                 </div>
             </div>
-            <div className="p-2 mr-4 flex flex-col">
+            <div className="mr-4 flex flex-col">
                 <div className="text-lg font-bold text-white">Dias en NZ</div>
                 <div className="text-xs font-bold text-white">
                     {endDateEFDayOfYear + livingInNz - startEFDateDayOfYear}
                 </div>
             </div>
-
         </div>
         <div className="w-full flex flex-wrap justify-between">
             {
                 daysArray.map((dayActivities: any, index : number) => {
-                    let realIndex = index + 1;
+                    let realIndex = index;
                     /**
                      * Dias_pasados
                      */

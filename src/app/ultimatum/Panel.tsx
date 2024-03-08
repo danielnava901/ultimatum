@@ -3,7 +3,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {PanelContext} from "@/context/PanelContext";
 import {dayNumToDate} from "@/util/constants";
-import ActivityType from "@/components/ActivityType";
+import ActivityType from "@/app/ultimatum/ActivityType";
 import {getActivityTypesRequest} from "@/apiRequests/activityRequest";
 
 export const Panel : React.FC = () => {

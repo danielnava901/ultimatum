@@ -1,4 +1,4 @@
-import {setActivityRepository} from "@/repository/activityRepository";
+import {setActivityRepository} from "@/repository/UltimatumRepository";
 
 export async function POST(request: Request) {
     const {day, activityTypeId} = await request.json();
