@@ -22,6 +22,7 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
     const {loading} = useContext(PanelContext);
     const [data, setData] = useState(initData);
 
+
     const getData = async () => {
         let result = await getUltimatumeRequest();
         setData(result);
@@ -44,13 +45,16 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
         flyingToNZDate
     } = data;
 
+    let totalWeek : number = 0;
+    let activitiesTotalWeek : number = 10 * (activityTypes.length || 7);
     const daysIndex : any[] = [];
     const totalDay: any[] = [];
     const days = !!daysArray ?  daysArray.map((day: any, index) => {
-        if((index + 1) >= (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5)) {
-            daysIndex.push(`${dayNumToDateLocal(index + 1)}`);
+        if((index + 1) > (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5)) {
+            daysIndex.push(`${dayNumToDateLocal(index)}`);
 
             if(day !== 0) {
+                totalWeek = totalWeek + day[`${index + 1}`].length;
                 let tacD = activityTypes.length - day[`${index + 1}`].length;
                 totalDay.push(tacD);
 
@@ -109,6 +113,9 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
                 }
             </div>
         </div>
+        <div className="w-full flex justify-center flex-col items-center">
+            <span className="font-bold">Semanal: {Math.ceil(totalWeek * 100 / activitiesTotalWeek)}%</span>
+        </div>
         <div className="w-full flex px-4 justify-between">
             <div className="p-2 mr-4 flex flex-col">
                 <div className="mr-4 flex items-center">
@@ -142,7 +149,7 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
         <div className="w-full flex flex-wrap justify-between">
             {
                 daysArray.map((dayActivities: any, index : number) => {
-                    let realIndex = index;
+                    let realIndex = index + 1;
                     /**
                      * Dias_pasados
                      */
