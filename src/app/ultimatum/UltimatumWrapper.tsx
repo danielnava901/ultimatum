@@ -44,8 +44,8 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
         flyingToNZDate
     } = data;
 
-    const daysIndex = [];
-    const totalDay = [];
+    const daysIndex : any[] = [];
+    const totalDay: any[] = [];
     const days = !!daysArray ?  daysArray.map((day: any, index) => {
         if((index + 1) >= (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5)) {
             daysIndex.push(`${index + 1} - ${dayNumToDateLocal(index + 1)}`);
@@ -64,7 +64,6 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
         return false;
     }).filter((day : any, index: number) => {
         return (index + 1) >= (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5);
-
     }): [];
 
 
