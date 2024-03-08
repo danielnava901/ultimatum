@@ -22,7 +22,6 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
     const {loading} = useContext(PanelContext);
     const [data, setData] = useState(initData);
 
-
     const getData = async () => {
         let result = await getUltimatumeRequest();
         setData(result);
@@ -51,15 +50,26 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
     const totalDay: any[] = [];
     const days = !!daysArray ?  daysArray.map((day: any, index) => {
         if((index + 1) > (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5)) {
-            daysIndex.push(`${dayNumToDateLocal(index)}`);
+
+            let dateTxtPerDay : any = dayNumToDateLocal(index);
+            dateTxtPerDay = dateTxtPerDay.split("/");
+            dateTxtPerDay = `${dateTxtPerDay[2]}/${dateTxtPerDay[1]}/${dateTxtPerDay[0]}`
+            console.log({orig: dateTxtPerDay});
+
+            let dayTxt : any = new Date(dateTxtPerDay).toDateString();
+            dayTxt = dayTxt.split(" ");
+            dayTxt.pop();
+            dayTxt = dayTxt.join(' ');
 
             if(day !== 0) {
                 totalWeek = totalWeek + day[`${index + 1}`].length;
                 let tacD = activityTypes.length - day[`${index + 1}`].length;
+                let perDay = Math.ceil(day[`${index + 1}`].length * 100 / activityTypes.length);
                 totalDay.push(tacD);
-
+                daysIndex.push(`${dayTxt} - ${perDay}%`);
                 return day[`${index + 1}`].length;
             }else {
+                daysIndex.push(`${dayTxt}`);
                 totalDay.push(7);
             }
 
@@ -105,7 +115,7 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
                             "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
                                 fill:"#f2eaea",
                                 fontWeight: "bold",
-                                fontSize: "19px"
+                                fontSize: "18px"
                             },
                         }}
 

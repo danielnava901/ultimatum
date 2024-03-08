@@ -58,6 +58,7 @@ export const setActivityRepository = async (day_num: number, activity_type_id: n
 
 export const getUltimatumDataRepository = async () => {
     const today = new Date()
+
     const todayText = todayToLocalStr()
     const startEFDateDayOfYear = dayOfYear(new Date(startEFDate));
     const endDateEFDayOfYear = dayOfYear(new Date(endDateEF));
