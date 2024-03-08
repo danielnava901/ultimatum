@@ -138,8 +138,12 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
                         {startEFDateDayOfYear - todayDayOfYear}
                     </span>
                 </div>
+                <div className="mr-4 flex items-center md:hidden">
+                    <span className="font-bold text-white mr-4">Días en NZ</span>
+                    <span className="text-xs font-bold text-white">{endDateEFDayOfYear + livingInNz - startEFDateDayOfYear}</span>
+                </div>
             </div>
-            <div className="mr-4 flex flex-col">
+            <div className="mr-4 flex-col hidden md:flex ">
                 <div className="text-lg font-bold text-white">Dias en NZ</div>
                 <div className="text-xs font-bold text-white">
                     {endDateEFDayOfYear + livingInNz - startEFDateDayOfYear}
