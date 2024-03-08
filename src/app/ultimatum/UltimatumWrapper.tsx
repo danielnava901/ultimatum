@@ -48,7 +48,7 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
     const totalDay: any[] = [];
     const days = !!daysArray ?  daysArray.map((day: any, index) => {
         if((index + 1) >= (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5)) {
-            daysIndex.push(`${index + 1} - ${dayNumToDateLocal(index + 1)}`);
+            daysIndex.push(`${dayNumToDateLocal(index + 1)}`);
 
             if(day !== 0) {
                 let tacD = activityTypes.length - day[`${index + 1}`].length;
