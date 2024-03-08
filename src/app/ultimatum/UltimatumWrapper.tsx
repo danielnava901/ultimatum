@@ -14,7 +14,9 @@ const initData = {
     daysArray: [],
     endDateEFDayOfYear: 0,
     todayDayOfYear: 0,
-    activityTypes: []
+    activityTypes: [],
+    flyingToChileDate: '',
+    flyingToNZDate: ''
 };
 export default function UltimatumWrapper({children}: {children: React.ReactNode}) {
     const {loading} = useContext(PanelContext);
@@ -43,18 +45,26 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
     } = data;
 
     const daysIndex = [];
-
+    const totalDay = [];
     const days = !!daysArray ?  daysArray.map((day: any, index) => {
-        if(day !== 0) {
-            return day[`${index + 1}`].length
-        }
-        return day;
-    }).filter((item, index) => {
-        if((index) > (todayDayOfYear - 5) && (index) < (todayDayOfYear + 5)) {
-            daysIndex.push(`${index} - ${dayNumToDateLocal(index)}`);
-            return true;
+        if((index + 1) >= (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5)) {
+            daysIndex.push(`${index + 1} - ${dayNumToDateLocal(index + 1)}`);
+
+            if(day !== 0) {
+                let tacD = activityTypes.length - day[`${index + 1}`].length;
+                totalDay.push(tacD);
+
+                return day[`${index + 1}`].length;
+            }else {
+                totalDay.push(7);
+            }
+
+            return day;
         }
         return false;
+    }).filter((day : any, index: number) => {
+        return (index + 1) >= (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5);
+
     }): [];
 
 
@@ -82,10 +92,12 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
                         ]}
                         series={[
                             {
-                                data: days,
+                                data: days, stack: 'activities', color: 'rgba(116, 19, 255, 0.8)'
+                            },{
+                                data: totalDay, stack: 'activities', color: 'rgba(200,20,200, 0.2)'
                             },
                         ]}
-                        height={200}
+                        height={150}
                         sx={{
                             "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
                                 fill:"#f2eaea",
