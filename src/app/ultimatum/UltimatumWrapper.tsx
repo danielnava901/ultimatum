@@ -6,7 +6,9 @@ import {PanelContext} from "@/context/PanelContext";
 import {getUltimatumeRequest} from "@/apiRequests/activityRequest";
 import {dayNumToDateLocal, livingInNz, secondVacation, vacation} from "@/util/constants";
 import {Day} from "@/app/ultimatum/Day";
+import ProcessBar from "@/app/ultimatum/ProcessBar";
 import {BarChart} from "@mui/x-charts";
+import UltimatumSummary from "@/app/ultimatum/UltimatumSummary";
 
 const initData = {
     todayText: '',
@@ -48,13 +50,12 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
     let activitiesTotalWeek : number = 10 * (activityTypes.length || 7);
     const daysIndex : any[] = [];
     const totalDay: any[] = [];
-    const days = !!daysArray ?  daysArray.map((day: any, index) => {
+    let days = !!daysArray ?  daysArray.map((day: any, index) => {
         if((index + 1) > (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5)) {
 
             let dateTxtPerDay : any = dayNumToDateLocal(index);
             dateTxtPerDay = dateTxtPerDay.split("/");
             dateTxtPerDay = `${dateTxtPerDay[2]}/${dateTxtPerDay[1]}/${dateTxtPerDay[0]}`
-            console.log({orig: dateTxtPerDay});
 
             let dayTxt : any = new Date(dateTxtPerDay).toDateString();
             dayTxt = dayTxt.split(" ");
@@ -77,8 +78,8 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
         }
         return false;
     }).filter((day : any, index: number) => {
-        return (index + 1) >= (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5);
-    }): [];
+        return (index + 1) > (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5);
+    }) : [];
 
 
     return <div
@@ -92,74 +93,25 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
             relative
             "
         style={{zIndex: 9}}>
-        <div className="w-full flex justify-between">
-            <div className="flex flex-col grow text-white">
-                {
-                    daysArray.length > 0 ? <BarChart
-                        xAxis={[
-                            {
-                                id: 'barCategories',
-                                data: daysIndex,
-                                scaleType: 'band',
-                            },
-                        ]}
-                        series={[
-                            {
-                                data: days, stack: 'activities', color: 'rgba(116, 19, 255, 0.8)'
-                            },{
-                                data: totalDay, stack: 'activities', color: 'rgba(200,20,200, 0.2)'
-                            },
-                        ]}
-                        height={150}
-                        sx={{
-                            "& .MuiChartsAxis-tickContainer .MuiChartsAxis-tickLabel":{
-                                fill:"#f2eaea",
-                                fontWeight: "bold",
-                                fontSize: "18px"
-                            },
-                        }}
+        <ProcessBar
+            daysArray={daysArray}
+            daysIndex={daysIndex}
+            days={days}
+            totalDay={totalDay}
+            height={150}
+        />
 
-                    /> : null
-                }
-            </div>
-        </div>
-        <div className="w-full flex justify-center flex-col items-center">
-            <span className="font-bold">Semanal: {Math.ceil(totalWeek * 100 / activitiesTotalWeek)}%</span>
-        </div>
-        <div className="w-full flex px-4 justify-between">
-            <div className="p-2 mr-4 flex flex-col">
-                <div className="mr-4 flex items-center">
-                    <div className="font-bold text-white mr-4">Hoy es:</div>
-                    <div className="text-xs font-bold text-white">{todayText}</div>
-                </div>
-                <div className="mr-4 flex items-center">
-                    <span className="font-bold text-white mr-4">V a C:</span>
-                    <span className="text-xs font-bold text-white">{flyingToChileDate}</span>
-                    <span className="mx-4">Falta:</span>
-                    <span className="text-xs font-bold text-white">
-                        {startEFDateDayOfYear - todayDayOfYear - vacation}
-                    </span>
-                </div>
-                <div className="mr-4 flex items-center">
-                    <span className="font-bold text-white mr-4">V a N:</span>
-                    <span className="text-xs font-bold text-white">{flyingToNZDate}</span>
-                    <span className="mx-4">Falta:</span>
-                    <span className="text-xs font-bold text-white">
-                        {startEFDateDayOfYear - todayDayOfYear}
-                    </span>
-                </div>
-                <div className="mr-4 flex items-center sm:hidden">
-                    <span className="font-bold text-white mr-4">Días en NZ</span>
-                    <span className="text-xs font-bold text-white">{endDateEFDayOfYear + livingInNz - startEFDateDayOfYear}</span>
-                </div>
-            </div>
-            <div className="mr-4 flex-col hidden sm:flex ">
-                <div className="text-lg font-bold text-white">Dias en NZ</div>
-                <div className="text-xs font-bold text-white">
-                    {endDateEFDayOfYear + livingInNz - startEFDateDayOfYear}
-                </div>
-            </div>
-        </div>
+        <UltimatumSummary
+            totalWeek={totalWeek}
+            activitiesTotalWeek={activitiesTotalWeek}
+            endDateEFDayOfYear={endDateEFDayOfYear}
+            todayText={todayText}
+            flyingToChileDate={flyingToChileDate}
+            startEFDateDayOfYear={startEFDateDayOfYear}
+            todayDayOfYear={todayDayOfYear}
+            flyingToNZDate={flyingToNZDate}
+        />
+
         <div className="w-full flex flex-wrap justify-between">
             {
                 daysArray.map((dayActivities: any, index : number) => {
