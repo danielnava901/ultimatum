@@ -7,7 +7,6 @@ import {getUltimatumeRequest} from "@/apiRequests/activityRequest";
 import {dayNumToDateLocal, livingInNz, secondVacation, vacation} from "@/util/constants";
 import {Day} from "@/app/ultimatum/Day";
 import ProcessBar from "@/app/ultimatum/ProcessBar";
-import {BarChart} from "@mui/x-charts";
 import UltimatumSummary from "@/app/ultimatum/UltimatumSummary";
 
 const initData = {
@@ -23,6 +22,7 @@ const initData = {
 export default function UltimatumWrapper({children}: {children: React.ReactNode}) {
     const {loading} = useContext(PanelContext);
     const [data, setData] = useState(initData);
+    const showOnly = 10;
 
     const getData = async () => {
         let result = await getUltimatumeRequest();
@@ -50,8 +50,9 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
     let activitiesTotalWeek : number = 10 * (activityTypes.length || 7);
     const daysIndex : any[] = [];
     const totalDay: any[] = [];
+
     let days = !!daysArray ?  daysArray.map((day: any, index) => {
-        if((index + 1) > (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5)) {
+        if((index + 1) > (todayDayOfYear - showOnly) && (index + 1) <= (todayDayOfYear + showOnly)) {
 
             let dateTxtPerDay : any = dayNumToDateLocal(index);
             dateTxtPerDay = dateTxtPerDay.split("/");
@@ -78,9 +79,8 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
         }
         return false;
     }).filter((day : any, index: number) => {
-        return (index + 1) > (todayDayOfYear - 5) && (index + 1) <= (todayDayOfYear + 5);
+        return (index + 1) > (todayDayOfYear - showOnly) && (index + 1) <= (todayDayOfYear + showOnly);
     }) : [];
-
 
     return <div
             className="
@@ -112,7 +112,7 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
             flyingToNZDate={flyingToNZDate}
         />
 
-        <div className="w-full flex flex-wrap justify-between">
+        <div className="w-full flex flex-wrap justify-start">
             {
                 daysArray.map((dayActivities: any, index : number) => {
                     let realIndex = index + 1;
@@ -170,6 +170,8 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
                                 ${clAfterEf}
                             `}
                     />
+                }).filter((day: any, index) => {
+                    return ((index + 1) > (todayDayOfYear - showOnly) && (index + 1) <= (todayDayOfYear + showOnly))
                 })
             }
         </div>

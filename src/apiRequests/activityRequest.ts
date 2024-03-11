@@ -40,3 +40,18 @@ export const getUltimatumeRequest = async () => {
         ...data
     };
 }
+
+export const newActivityTypeRequest = async ({name, bgColor} : {name: string, bgColor: string}) => {
+    let response = await fetch("/api/activityType/new", {
+        method: "POST",
+        body: JSON.stringify({
+            name, bgColor
+        })
+    });
+    response = await response.json();
+    let {data} : any = response;
+    return {
+        ...data
+    };
+}
+

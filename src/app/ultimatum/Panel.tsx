@@ -7,7 +7,7 @@ import ActivityType from "@/app/ultimatum/ActivityType";
 import {getActivityTypesRequest} from "@/apiRequests/activityRequest";
 
 export const Panel : React.FC = () => {
-    const {show, setShow, currentDay, setLoading} = useContext(PanelContext);
+    const {show, setShow, currentDay, setLoading, loading} = useContext(PanelContext);
     const [day, setDay] = useState('');
     const panelRef = useRef(null);
     const [activityTypes, setActivityTypes] = useState([]);
@@ -19,13 +19,13 @@ export const Panel : React.FC = () => {
         setLoading(false);
     }
 
-    useEffect(() => {
-        getActivityTypes();
-    }, []);
 
     useEffect(() => {
         if(!isNaN(currentDay)) {
             setDay(dayNumToDate(currentDay).toLocaleDateString());
+        }
+        if(show) {
+            getActivityTypes();
         }
     }, [show]);
 
@@ -75,25 +75,33 @@ export const Panel : React.FC = () => {
                  }}
             >
                 <div className="mb-4">Día: {currentDay} - {day}</div>
-                <div className="flex justify-between mb-4 flex flex-wrap mt-4">
-                    {
-                        activityTypes.map((type: any, index: number) => {
-                            return <ActivityType
-                                key={type.id}
-                                type={type}
-                            />
-                        })
+                <div className="flex items-center justify-between mb-4 flex mt-4">
+                    <div className="flex overflow-x-auto
+                        border rounded
+                        p-2
+                        max-w-[350px]
+                        md:max-w-[550px]
+                        lg:max-w-[750px]
+                        xl:max-w-[950px]
+                    ">
+                        {
+                            activityTypes.map((type: any, index: number) => {
+                                return <ActivityType
+                                    key={type.id}
+                                    type={type}
+                                />
+                            })
 
-                    }
-                </div>
-                <div className="flex justify-end">
+                        }
+
+                    </div>
+
                     <ActivityType
                         type={{
                             id: 99,
                             name: "Otro",
                             bg_color: "bg-gray-400"
                         }} />
-
                 </div>
             </div>
         </div> : null

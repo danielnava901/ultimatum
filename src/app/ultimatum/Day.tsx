@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {dayNumToDateLocal} from "@/util/constants";
 import {PanelContext} from "@/context/PanelContext";
 
@@ -50,7 +50,9 @@ export const Day = (
         dayActivities,
         activityTypes
     }: DayProps) => {
-    const activityTypesLength = activityTypes.length
+    const [actT] = useState(activityTypes);
+
+    const activityTypesLength = actT.length
     const {setCurrentDay, setShow} = useContext(PanelContext);
     const dayText = dayNumToDateLocal(indexDay);
     const longPressEvent = () => {
@@ -63,11 +65,10 @@ export const Day = (
 
 
     if(isNaN(dayActivities)) {
-
         activitiesCompleted = dayActivities[indexDay];
 
         activityCircle = activitiesCompleted.map((dA: number) => {
-            return activityTypes.map((aT: any, indexAT: number) => {
+            return actT.map((aT: any, indexAT: number) => {
                 let position : any = getStyle(`p_${dA}`);
 
                 if(dA === aT.id) {
@@ -89,7 +90,6 @@ export const Day = (
             }).filter((item : any) => !!item);
         })
         activitiesCompleted = activitiesCompleted.length || 0;
-
     }
 
     return (<div className="w-16 h-16 flex justify-center items-center
