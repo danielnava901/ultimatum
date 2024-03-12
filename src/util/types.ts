@@ -1,3 +1,5 @@
+import React from "react";
+
 export type NoteType = {
     id: number,
     note?: string,
@@ -11,6 +13,7 @@ export type NoteProps = {
     currentDay: any,
     onClick?: () => void,
     onChange?: (note : NoteType, text: string) => void,
-    onFocus?: () => void
+    onFocus?: () => void,
+    children: React.ReactNode
 }
 
