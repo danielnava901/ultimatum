@@ -17,7 +17,7 @@ export default function Notes({currentDay}: {currentDay: number}) {
     const [id, setId] = useState(-1);
     const [hasChange, setHasChange] = useState(false);
 
-    const getNewNoteDefault = (day_num) => {
+    const getNewNoteDefault = (day_num: number) => {
         setId(id - 1);
         return {...defaultNote, id, day_num}
     }
