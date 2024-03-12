@@ -7,11 +7,9 @@ export async function existActivityTypeByName({name} : {name: string}) {
         .select()
         .eq("name", name);
 
-    if(status === 200 && data.length > 0) {
-        return true;
-    }
+    return status === 200 && data.length > 0;
 
-    return false;
+
 }
 
 export async function createActivityTypeByName(

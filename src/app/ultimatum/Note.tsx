@@ -1,19 +1,21 @@
-import {NoteProps, NoteType} from "@/util/types";
+import {NoteProps} from "@/util/types";
 import React, {useState} from "react";
 
 
 const NoteWrapper = (
-    {isNew, children, onClick} : {isNew: boolean, children: React.ReactNode, onClick: () => void }) => {
+    {isNew, children, onClick} : NoteProps) => {
     return <div className={`
-        w-full
-        border
-        rounded
-        border-gray-100
-        flex
-        items-center
-        mt-4
-        ${isNew ? "border-2 border-dashed" : "border-l-4 border-l-yellow-400" }
-    `} onClick={onClick}>
+            w-full
+            border
+            rounded
+            border-gray-100
+            flex
+            items-center
+            mt-4
+            ${isNew ? "border-2 border-dashed" : "border-l-4 border-l-yellow-400" }
+        `}
+        onClick={onClick}
+    >
 
         <div className={`
                 h-full
@@ -30,28 +32,25 @@ const NoteWrapper = (
 }
 
 export default function Note(
-    {note, isNew, currentDay, onClick}: NoteProps)
+    {note, isNew, currentDay, onClick, onChange, onBlur}: NoteProps)
 {
-    const [text, setText] = useState(note?.text || '');
+    const [text, setText] = useState(note?.note || '');
 
     if(isNew) {
         return <NoteWrapper
+            currentDay={currentDay}
             isNew={isNew}
             onClick={() => {
-                if(onClick) {
-                    onClick();
-                }
+                !!onClick && onClick();
             }}>
             Nueva nota
         </NoteWrapper>
     }
 
     return <NoteWrapper
-            note={note}
+            currentDay={currentDay}
             onClick={() => {
-                if(onClick) {
-                    onClick();
-                }
+                !!onClick && onClick();
             }}
             isNew={!!isNew}
     >
@@ -59,7 +58,9 @@ export default function Note(
             className="w-full max-h-[250px] overflow-y p-2 h-22"
             onChange={(ev) => {
                 setText(ev.target.value);
+                (!!note && !!onChange) && onChange(note, ev.target.value);
             }}
+            onBlur={onBlur}
             value={text}
         />
     </NoteWrapper>
