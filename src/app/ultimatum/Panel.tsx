@@ -5,9 +5,10 @@ import {PanelContext} from "@/context/PanelContext";
 import {dayNumToDate} from "@/util/constants";
 import ActivityType from "@/app/ultimatum/ActivityType";
 import {getActivityTypesRequest} from "@/apiRequests/activityRequest";
+import Notes from "@/app/ultimatum/Notes";
 
 export const Panel : React.FC = () => {
-    const {show, setShow, currentDay, setLoading, loading} = useContext(PanelContext);
+    const {show, setShow, currentDay, setLoading} = useContext(PanelContext);
     const [day, setDay] = useState('');
     const panelRef = useRef(null);
     const [activityTypes, setActivityTypes] = useState([]);
@@ -64,7 +65,8 @@ export const Panel : React.FC = () => {
                 lg:min-h-10/12
                 fixed
                 text-gray-800
-                flex flex-col
+                flex
+                flex-col
                 flex-wrap
                 relative
             "
@@ -91,9 +93,7 @@ export const Panel : React.FC = () => {
                                     type={type}
                                 />
                             })
-
                         }
-
                     </div>
 
                     <ActivityType
@@ -103,6 +103,7 @@ export const Panel : React.FC = () => {
                             bg_color: "bg-gray-400"
                         }} />
                 </div>
+                <Notes currentDay={currentDay} />
             </div>
         </div> : null
         }
