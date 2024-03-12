@@ -1,4 +1,4 @@
-export function debounce<T extends unknown[], U>(func) {
+export function debounce<T extends unknown[], U>(func, time) {
     let wait = arguments.length <= 1 || arguments[1] === undefined ? 100 : arguments[1];
     let timeout = void 0;
 
