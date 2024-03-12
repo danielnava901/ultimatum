@@ -11,7 +11,7 @@ export default function UltimatumSummary(
         endDateEFDayOfYear,
         totalWeek,
         activitiesTotalWeek
-    }
+    } : any
 ) {
     return <div className="w-full flex px-4 justify-between flex-col">
         <div className="w-full flex justify-center flex-col items-center">
