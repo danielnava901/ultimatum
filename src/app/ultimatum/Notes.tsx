@@ -23,7 +23,7 @@ export default function Notes({currentDay}: {currentDay: any}) {
     }
 
     const onClickNew = () => {
-        let newN = getNewNoteDefault(currentDay);
+        let newN : NoteType = getNewNoteDefault(currentDay);
         setCurrenNote(newN);
         setNotes([...notes, newN]);
     }
@@ -32,15 +32,16 @@ export default function Notes({currentDay}: {currentDay: any}) {
         setHasChange(!hasChange);
         let response : any = await actionNote(note);
         setCurrenNote(response);
-    }, 500);
+        await getData();
+    }, 200);
 
     const onChange = (note: NoteType, text : any) => {
-        let updateNote = {...currentNote, note: text};
+        let updateNote : NoteType = {...currentNote, note: text};
         debounceFn(updateNote);
     }
 
     const getData = async () => {
-        let response = await getAllNotes();
+        let response = await getAllNotes(currentDay);
         setNotes([...response]);
     }
 
@@ -49,7 +50,6 @@ export default function Notes({currentDay}: {currentDay: any}) {
     }, []);
 
     return <div className="w-full flex flex-col">
-        {currentNote.id}
         <div className="w-full flex flex-col max-h-[300px] overflow-y-auto">
             {
                 notes.map((note: NoteType, index: number) => {
@@ -59,7 +59,7 @@ export default function Notes({currentDay}: {currentDay: any}) {
                         currentDay={currentDay}
                         onClick={() => {}}
                         onChange={onChange}
-                        onBlur={() =>{
+                        onFocus={() =>{
                             console.log("bligr", note);
                             setCurrenNote(note);
                         }}

@@ -11,6 +11,6 @@ export type NoteProps = {
     currentDay: any,
     onClick?: () => void,
     onChange?: (note : NoteType, text: string) => void,
-    onBlur?: () => void
+    onFocus?: () => void
 }
 

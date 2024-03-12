@@ -1,8 +1,9 @@
-import {createNote, getAllNotes, updateNote} from "@/repository/NotesRepository";
+import {createNote, getAllNotesByDay, updateNote} from "@/repository/NotesRepository";
 
 export async function POST(request: Request) {
-    let result : any = await getAllNotes();
-    let {data} = result;
+    let {dayNum} : any = await request.json();
+    let result : any = await getAllNotesByDay(dayNum);
+    let {data} : any = result;
 
     return Response.json({
         code: 200,

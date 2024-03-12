@@ -3,8 +3,6 @@ import {NoteType} from "@/util/types";
 
 export async function createNote({note} : {note: NoteType})
 {
-    console.log("4", {note});
-
     return await supabaseClient
         .from("note_day")
         .insert({
@@ -15,7 +13,6 @@ export async function createNote({note} : {note: NoteType})
 
 export async function updateNote({note} : {note: NoteType})
 {
-    console.log("5", {note});
     return await supabaseClient
         .from("note_day")
         .update({
@@ -25,10 +22,12 @@ export async function updateNote({note} : {note: NoteType})
         .select();
 }
 
-export async function getAllNotes()
+export async function getAllNotesByDay(dayNum: number)
 {
     console.log("5 all");
     return await supabaseClient
         .from("note_day")
-        .select();
+        .select()
+        .eq("day_num", +dayNum);
+
 }

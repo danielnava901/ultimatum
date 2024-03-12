@@ -32,7 +32,7 @@ const NoteWrapper = (
 }
 
 export default function Note(
-    {note, isNew, currentDay, onClick, onChange, onBlur}: NoteProps)
+    {note, isNew, currentDay, onClick, onChange, onFocus}: NoteProps)
 {
     const [text, setText] = useState(note?.note || '');
 
@@ -60,7 +60,7 @@ export default function Note(
                 setText(ev.target.value);
                 (!!note && !!onChange) && onChange(note, ev.target.value);
             }}
-            onBlur={onBlur}
+            onFocus={onFocus}
             value={text}
         />
     </NoteWrapper>
