@@ -1,6 +1,6 @@
 import {NoteType} from "@/util/types";
 
-export const getAllNotes = async (dayNum) => {
+export const getAllNotes = async (dayNum: number) => {
     let response : any = await fetch("/api/notes/get", {
         method: "POST",
         body: JSON.stringify({
@@ -8,7 +8,7 @@ export const getAllNotes = async (dayNum) => {
         })
     });
     response = await response.json();
-    let {data} = response;
+    let {data} : any = response;
     return data;
 }
 
@@ -21,7 +21,7 @@ export const newOrUpdateNote = async (note: NoteType) =>
         })
     });
     response = await response.json();
-    let {data} = response;
+    let {data} : any = response;
     return data;
 }
 
@@ -33,13 +33,11 @@ export const deleteNote = async (note: NoteType) =>
 
 export const actionNote = async (note: NoteType) =>
 {
-    let response : any = null;
+    let response : any;
 
     if(note.note?.length === 0 && note.id > 0) {
-        console.log("delete...")
         response = await deleteNote(note);
     }else {
-        console.log("crear...")
         response = await newOrUpdateNote(note);
     }
 

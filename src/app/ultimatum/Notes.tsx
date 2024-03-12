@@ -11,7 +11,7 @@ const defaultNote = {
     day_num: -1
 };
 
-export default function Notes({currentDay}: {currentDay: any}) {
+export default function Notes({currentDay}: {currentDay: number}) {
     const [notes, setNotes] = useState<NoteType[]>([]);
     const [currentNote, setCurrenNote] = useState<NoteType>(defaultNote);
     const [id, setId] = useState(-1);
