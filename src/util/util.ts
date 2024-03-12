@@ -2,6 +2,7 @@ export function debounce<T extends unknown[], U>(func, time) {
     let wait = arguments.length <= 1 || arguments[1] === undefined ? 100 : arguments[1];
     let timeout = void 0;
 
+
     return function (...args: T) {
         let _this = this;
 
