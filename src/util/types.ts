@@ -14,6 +14,6 @@ export type NoteProps = {
     onClick?: () => void,
     onChange?: (note : NoteType, text: string) => void,
     onFocus?: () => void,
-    children: React.ReactNode
+    children?: React.ReactNode
 }
 
