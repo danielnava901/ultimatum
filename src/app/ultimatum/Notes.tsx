@@ -33,7 +33,7 @@ export default function Notes({currentDay}: {currentDay: number}) {
         let response : any = await actionNote(note);
         setCurrenNote(response);
         await getData();
-    }, 200);
+    }, 350);
 
     const onChange = (note: NoteType, text : any) => {
         let updateNote : NoteType = {...currentNote, note: text};
