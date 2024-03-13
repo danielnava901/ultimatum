@@ -24,10 +24,18 @@ export async function updateNote({note} : {note: NoteType})
 
 export async function getAllNotesByDay(dayNum: number)
 {
-    console.log("5 all");
     return await supabaseClient
         .from("note_day")
         .select()
-        .eq("day_num", +dayNum);
+        .eq("day_num", +dayNum)
+        .is("deleted_at",  null)
+        ;
+}
 
+export async function deleteNote(note: NoteType)
+{
+    return await supabaseClient
+        .from("note_day")
+        .update({"deleted_at": new Date()})
+        .eq("id", +note.id);
 }

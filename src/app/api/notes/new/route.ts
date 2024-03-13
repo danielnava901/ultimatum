@@ -2,8 +2,8 @@ import {createNote, updateNote} from "@/repository/NotesRepository";
 
 
 export async function POST(request: Request) {
-    const {note, dayNum} = await request.json();
-    let result : any = null;
+    const {note} = await request.json();
+    let result : any;
 
     if(note.id > 0) {
         result = await updateNote({note});

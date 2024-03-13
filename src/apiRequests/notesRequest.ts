@@ -27,19 +27,18 @@ export const newOrUpdateNote = async (note: NoteType) =>
 
 export const deleteNote = async (note: NoteType) =>
 {
-
-    return "delete";
+    let response : any = await fetch("/api/notes/delete", {
+        method: "POST",
+        body: JSON.stringify({
+            note
+        })
+    });
+    response = await response.json();
+    let {data} : any = response;
+    return data;
 }
 
 export const actionNote = async (note: NoteType) =>
 {
-    let response : any;
-
-    if(note.note?.length === 0 && note.id > 0) {
-        response = await deleteNote(note);
-    }else {
-        response = await newOrUpdateNote(note);
-    }
-
-    return response;
+    return await newOrUpdateNote(note);
 }

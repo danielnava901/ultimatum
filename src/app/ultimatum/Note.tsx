@@ -10,8 +10,8 @@ const NoteWrapper = (
             rounded
             border-gray-100
             flex
+            mb-4
             items-center
-            mt-4
             ${isNew ? "border-2 border-dashed" : "border-l-4 border-l-yellow-400" }
         `}
         onClick={onClick}
