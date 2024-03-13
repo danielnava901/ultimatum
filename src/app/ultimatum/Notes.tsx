@@ -4,7 +4,10 @@ import {NoteType} from "@/util/types";
 import {actionNote, deleteNote, getAllNotes} from "@/apiRequests/notesRequest";
 import { useDebouncedCallback } from 'use-debounce';
 import 'react-swipeable-list/dist/styles.css';
-import {LeadingActions, SwipeableList, SwipeableListItem, SwipeAction, TrailingActions} from "react-swipeable-list";
+import {SwipeableList,
+    SwipeableListItem,
+    SwipeAction,
+    TrailingActions} from "react-swipeable-list";
 
 
 const defaultNote = {
@@ -95,7 +98,6 @@ export default function Notes({currentDay}: {currentDay: number}) {
                                 }}
                             />
                         </SwipeableListItem>
-
                 })
             }
             </SwipeableList>
