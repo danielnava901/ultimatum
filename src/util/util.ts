@@ -1,6 +1,6 @@
 export function debounce<T extends unknown[], U>(func : any, time: number) {
     let wait : number = time;
-    let timeout : any = void 0;
+    let timeout : any;
 
 
     return function inner(this: typeof inner,...args: T) {
