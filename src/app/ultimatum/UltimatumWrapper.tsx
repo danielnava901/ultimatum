@@ -113,7 +113,7 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
             flyingToNZDate={flyingToNZDate}
         />
 
-        <div className="w-full flex flex-wrap justify-start">
+        <div className="w-full flex flex-wrap justify-between md:justify-start">
             {
                 daysArray.map((dayActivities: any, index : number) => {
                     let realIndex = index + 1;
