@@ -3,7 +3,7 @@ export function debounce<T extends unknown[], U>(func : any, time: number) {
     let timeout : any = void 0;
 
 
-    return function (...args: T) {
+    return function inner(this: typeof inner, [...args]: T) {
         let _this: any;
         _this = this;
 
