@@ -46,7 +46,6 @@ export default function Notes({currentDay}: {currentDay: number}) {
     const onDelete = async () => {
         let response : any = await deleteNote(currentNote);
         setCurrenNote(defaultNote);
-        await getData();
     }
 
     const getData = async () => {
@@ -81,6 +80,10 @@ export default function Notes({currentDay}: {currentDay: number}) {
                     return <SwipeableListItem
                             key={index}
                             trailingActions={trailingActions()}
+                            onSwipeStart={(direction: string) => {
+                                setCurrenNote(note);
+                            }}
+                            destructiveCallbackDelay={300}
                         >
                             <Note
                                 note={note}
