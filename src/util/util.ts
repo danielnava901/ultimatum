@@ -1,12 +1,12 @@
 export function debounce<T extends unknown[], U>(func : any, time: number) {
-    let wait = time;
-    let timeout = void 0;
+    let wait : number = time;
+    let timeout : any = void 0;
 
 
     return function (...args: T) {
-        let _this = this;
+        let _this : any = this;
 
-        for (let _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        for (let _len : any = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
