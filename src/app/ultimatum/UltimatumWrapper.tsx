@@ -19,6 +19,7 @@ const initData = {
     flyingToChileDate: '',
     flyingToNZDate: ''
 };
+
 export default function UltimatumWrapper({children}: {children: React.ReactNode}) {
     const {loading} = useContext(PanelContext);
     const [data, setData] = useState(initData);
@@ -171,7 +172,7 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
                             `}
                     />
                 }).filter((day: any, index) => {
-                    return ((index + 1) > (todayDayOfYear - showOnly) && (index + 1) <= (todayDayOfYear + showOnly))
+                    return ((index + 1) > (todayDayOfYear - showOnly))
                 })
             }
         </div>
