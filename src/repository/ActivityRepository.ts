@@ -1,13 +1,12 @@
 import {supabaseClient} from "@/util/supabase.client";
 
 export async function existActivityTypeByName({name} : {name: string}) {
-    console.log("checar....", name);
-    let {status, data} = await supabaseClient
+    let {status, data} : any = await supabaseClient
         .from('dnv_activity_type')
         .select()
         .eq("name", name);
 
-    return status === 200 && data.length > 0;
+    return status === 200 && !!data && data.length > 0;
 
 
 }
