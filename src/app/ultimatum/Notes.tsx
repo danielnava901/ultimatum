@@ -1,8 +1,9 @@
 import Note from "@/app/ultimatum/Note";
 import {useEffect, useState} from "react";
 import {NoteType} from "@/util/types";
-import {debounce} from "@/util/util";
 import {actionNote, getAllNotes} from "@/apiRequests/notesRequest";
+import { useDebouncedCallback } from 'use-debounce';
+
 
 const defaultNote = {
     id: -1,
@@ -28,16 +29,16 @@ export default function Notes({currentDay}: {currentDay: number}) {
         setNotes([...notes, newN]);
     }
 
-    const debounceFn = debounce(async (note: NoteType) => {
+    const debounceFn = useDebouncedCallback(async (note: NoteType) => {
         setHasChange(!hasChange);
         let response : any = await actionNote(note);
         setCurrenNote(response);
         await getData();
-    }, 350);
+    }, 500);
 
-    const onChange = (note: NoteType, text : any) => {
+    const onChange = async (note: NoteType, text : any) => {
         let updateNote : NoteType = {...currentNote, note: text};
-        debounceFn(updateNote);
+        await debounceFn(updateNote);
     }
 
     const getData = async () => {
