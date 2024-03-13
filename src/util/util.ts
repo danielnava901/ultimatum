@@ -4,7 +4,8 @@ export function debounce<T extends unknown[], U>(func : any, time: number) {
 
 
     return function (...args: T) {
-        let _this : any = this;
+        let _this: any;
+        _this = this;
 
         for (let _len : any = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
