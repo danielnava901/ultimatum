@@ -3,36 +3,19 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Panel} from "./Panel";
 import Loading from "@/components/Loading";
 import {PanelContext} from "@/context/PanelContext";
-import {getUltimatumeRequest} from "@/apiRequests/activityRequest";
-import {dayNumToDateLocal, livingInNz, secondVacation, vacation} from "@/util/constants";
+import {livingInNz, secondVacation, vacation} from "@/util/constants";
 import {Day} from "@/app/ultimatum/Day";
 import ProcessBar from "@/app/ultimatum/ProcessBar";
 import UltimatumSummary from "@/app/ultimatum/UltimatumSummary";
+import useUltimatumData from "@/hooks/useUltimatumData";
 
-const initData = {
-    todayText: '',
-    startEFDateDayOfYear: 0,
-    daysArray: [],
-    endDateEFDayOfYear: 0,
-    todayDayOfYear: 0,
-    activityTypes: [],
-    flyingToChileDate: '',
-    flyingToNZDate: ''
-};
-
-export default function UltimatumWrapper({children}: {children: React.ReactNode}) {
+export default function UltimatumWrapper() {
     const {loading} = useContext(PanelContext);
-    const [data, setData] = useState(initData);
-    const showOnly = 10;
-
-    const getData = async () => {
-        let result = await getUltimatumeRequest();
-        setData(result);
-    }
+    const [ultimatumData, setUltimatumData] = useUltimatumData();
 
     useEffect(() => {
         if(!loading) {
-            getData();
+            setUltimatumData();
         }
     }, [loading]);
 
@@ -44,44 +27,15 @@ export default function UltimatumWrapper({children}: {children: React.ReactNode}
         todayDayOfYear,
         activityTypes,
         flyingToChileDate,
-        flyingToNZDate
-    } = data;
+        flyingToNZDate,
+        days,
+        totalDay,
+        daysIndex,
+        activitiesTotalWeek,
+        totalWeek,
+        showOnly
+    } = ultimatumData;
 
-    let totalWeek : number = 0;
-    let activitiesTotalWeek : number = 10 * (activityTypes.length || 7);
-    const daysIndex : any[] = [];
-    const totalDay: any[] = [];
-
-    let days = !!daysArray ?  daysArray.map((day: any, index) => {
-        if((index + 1) > (todayDayOfYear - showOnly) && (index + 1) <= (todayDayOfYear + showOnly)) {
-
-            let dateTxtPerDay : any = dayNumToDateLocal(index);
-            dateTxtPerDay = dateTxtPerDay.split("/");
-            dateTxtPerDay = `${dateTxtPerDay[2]}/${dateTxtPerDay[1]}/${dateTxtPerDay[0]}`
-
-            let dayTxt : any = new Date(dateTxtPerDay).toDateString();
-            dayTxt = dayTxt.split(" ");
-            dayTxt.pop();
-            dayTxt = dayTxt.join(' ');
-
-            if(day !== 0) {
-                totalWeek = totalWeek + day[`${index + 1}`].length;
-                let tacD = activityTypes.length - day[`${index + 1}`].length;
-                let perDay = Math.ceil(day[`${index + 1}`].length * 100 / activityTypes.length);
-                totalDay.push(tacD);
-                daysIndex.push(`${dayTxt} - ${perDay}%`);
-                return day[`${index + 1}`].length;
-            }else {
-                daysIndex.push(`${dayTxt}`);
-                totalDay.push(7);
-            }
-
-            return day;
-        }
-        return false;
-    }).filter((day : any, index: number) => {
-        return (index + 1) > (todayDayOfYear - showOnly) && (index + 1) <= (todayDayOfYear + showOnly);
-    }) : [];
 
     return <div
             className="

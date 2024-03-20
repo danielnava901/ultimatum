@@ -11,7 +11,7 @@ const getData = async () => {
 
 export default async function Page() {
 
-
+    // solo puse esto para que tailwind jale las clases
     const divHidden = <div className="
         bg-lime-400
         bg-violet-500
@@ -23,8 +23,6 @@ export default async function Page() {
         "></div>
 
     return <UltimatumProvider>
-        <UltimatumWrapper>
-            &nbsp;
-        </UltimatumWrapper>
+        <UltimatumWrapper />
     </UltimatumProvider>
 }
