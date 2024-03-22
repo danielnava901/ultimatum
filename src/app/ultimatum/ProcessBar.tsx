@@ -18,6 +18,7 @@ export default function ProcessBar(
         height
     }: ProcessBarType) {
 
+
     if(daysArray.length === 0 ||
         days.length === 0 ||
         totalDay.length === 0 ||
@@ -25,6 +26,7 @@ export default function ProcessBar(
     ) {
         return <div>No data</div>
     }
+
 
     return <div className="flex flex-col grow text-white w-full">
         <BarChart

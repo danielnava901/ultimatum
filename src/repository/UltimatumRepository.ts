@@ -8,12 +8,19 @@ import {
     todayToLocalStr,
     vacation
 } from "@/util/constants";
+import {getCountNotesGroupByDay} from "@/repository/NotesRepository";
 
 
 export const getActivitiesRepository = async () => {
-    return await supabaseClient
+    let {data, error} = await supabaseClient
         .from('dnv_activity')
         .select('id, activity_type_id, day_num');
+
+    if(error) {
+        return []
+    }
+
+    return data;
 }
 
 export const getActivitiesByDayAndActivityRepository = async (day: number, activityTypeId: number) => {
@@ -70,22 +77,48 @@ export const getUltimatumDataRepository = async () => {
     const activities = await getActivitiesRepository();
     const activityTypes = await getActivityTypesRepository();
 
+    /*Regesa las notas por dia*/
+    const noteMap = await getCountNotesGroupByDay();
 
-    if(!!activities && !!activities.data) {
-        activities.data.map((activityPerDay: any, index: number) => {
+    let realDaysArray = daysArray.map((day, index) => {
+         let realDay = index + 1;
+         let dayObj = {};
+         let activitiesPerDay = activities.filter(activity => activity.day_num === realDay);
+         let notesPerDay = noteMap.has(realDay) ? noteMap.get(realDay) : [];
 
-            let dayMap = daysArray[activityPerDay.day_num - 1];
+         if(activitiesPerDay.length === 0 && notesPerDay.length === 0) {
+             return 0;
+         }
 
-            if(dayMap !== 0) {
-                let mapi = dayMap[activityPerDay.day_num];
-                dayMap[activityPerDay.day_num] = [...mapi, activityPerDay.activity_type_id];
-            }else {
-                dayMap = {};
-                dayMap[activityPerDay.day_num] = [activityPerDay.activity_type_id];
-                daysArray[activityPerDay.day_num - 1] = dayMap;
-            }
-        });
-    }
+
+         dayObj[realDay] = {
+             act: activitiesPerDay,
+             notes: notesPerDay
+         };
+
+         return dayObj;
+    });
+
+    activities.map((activityPerDay: any, index: number) => {
+
+        let dayMap = daysArray[activityPerDay.day_num - 1];
+        let dayNotes = noteMap.has(activityPerDay.day_num) ? noteMap.get(activityPerDay.day_num) : []
+
+        if(dayMap !== 0) {
+            let mapi = dayMap[activityPerDay.day_num]["act"];
+            dayMap[activityPerDay.day_num]["act"] = [...mapi, activityPerDay.activity_type_id];
+            dayMap[activityPerDay.day_num]["notes"] = dayNotes;
+
+        }else {
+            dayMap = {};
+
+            dayMap[activityPerDay.day_num] = {
+                act: [activityPerDay.activity_type_id],
+                notes: dayNotes
+            };
+            daysArray[activityPerDay.day_num - 1] = dayMap;
+        }
+    });
 
 
     return {
@@ -93,7 +126,7 @@ export const getUltimatumDataRepository = async () => {
         startEFDateDayOfYear,
         endDateEFDayOfYear,
         todayDayOfYear,
-        daysArray,
+        daysArray: realDaysArray,
         activityTypes: activityTypes.data,
         flyingToChileDate,
         flyingToNZDate

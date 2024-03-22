@@ -39,3 +39,29 @@ export async function deleteNote(note: NoteType)
         .update({"deleted_at": new Date()})
         .eq("id", +note.id);
 }
+
+export async function getCountNotesGroupByDay()
+{
+    let {error, data} = await supabaseClient
+        .from("note_day")
+        .select()
+        .is("deleted_at",  null)
+        ;
+
+    if(error) {
+        return [];
+    }
+
+
+    return data.reduce((previousValue: any, currentValue: any) => {
+        let mp = new Map();
+        mp.entries();
+        if (previousValue.has(currentValue.day_num)) {
+            let obj = previousValue.get(currentValue.day_num);
+            previousValue.set(currentValue.day_num, [...obj, currentValue.note]);
+            return previousValue;
+        } else {
+            return previousValue.set(currentValue.day_num, [currentValue.note]);
+        }
+    }, new Map());
+}

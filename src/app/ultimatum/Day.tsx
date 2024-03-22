@@ -51,7 +51,6 @@ export const Day = (
         activityTypes
     }: DayProps) => {
     const [actT] = useState(activityTypes);
-
     const activityTypesLength = actT.length
     const {setCurrentDay, setShow} = useContext(PanelContext);
     const dayText = dayNumToDateLocal(indexDay);
@@ -61,17 +60,20 @@ export const Day = (
     }
 
     let activitiesCompleted : any = 0;
+    let notesCompleted : any = 0;
     let activityCircle = <div></div>;
 
 
     if(isNaN(dayActivities)) {
-        activitiesCompleted = dayActivities[indexDay];
+        console.log("nooo", dayActivities[indexDay]);
+        activitiesCompleted = dayActivities[indexDay]["act"];
+        notesCompleted = dayActivities[indexDay]["notes"].length;
 
-        activityCircle = activitiesCompleted.map((dA: number) => {
+        activityCircle = activitiesCompleted.map((dA: any) => {
             return actT.map((aT: any, indexAT: number) => {
-                let position : any = getStyle(`p_${dA}`);
+                let position : any = getStyle(`p_${dA.activity_type_id}`);
 
-                if(dA === aT.id) {
+                if(dA.activity_type_id === aT.id) {
                     return <div
                         key={indexAT}
                         className={`w-3 h-3 
@@ -93,7 +95,7 @@ export const Day = (
     }
 
     return (<div className="w-16 h-16 flex justify-center items-center
-        relative m-2">
+        relative m-2 mb-4">
         {activityCircle}
         <div
             onClick={longPressEvent}
@@ -115,7 +117,8 @@ export const Day = (
                 {`${Math.ceil(activitiesCompleted * 100 /activityTypesLength)}%`}
             </div>
         </div>
-
+        {notesCompleted > 0 ? <div className="absolute text-xs" style={{bottom: "-15px"}}>
+            {notesCompleted}</div> : null}
     </div>)
 }
 

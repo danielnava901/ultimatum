@@ -43,12 +43,12 @@ export default function useUltimatumData({loading} : any) {
                     dayTxt = dayTxt.join(' ');
 
                     if(day !== 0) {
-                        totalWeek = totalWeek + day[`${index + 1}`].length;
-                        let tacD = _result.activityTypes.length - day[`${index + 1}`].length;
-                        let perDay = Math.ceil(day[`${index + 1}`].length * 100 / _result.activityTypes.length);
+                        totalWeek = totalWeek + day[`${index + 1}`]["act"].length;
+                        let tacD = _result.activityTypes.length - day[`${index + 1}`]["act"].length;
+                        let perDay = Math.ceil(day[`${index + 1}`]["act"].length * 100 / _result.activityTypes.length);
                         _totalDay.push(tacD);
                         _daysIndex.push(`${dayTxt} - ${perDay}%`);
-                        return day[`${index + 1}`].length;
+                        return day[`${index + 1}`]["act"].length;
                     }else {
                         _daysIndex.push(`${dayTxt}`);
                         _totalDay.push(7);
