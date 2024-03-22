@@ -88,7 +88,7 @@ export const Day = (
                 }
 
             }).filter((item : any) => !!item);
-        })
+        });
         activitiesCompleted = activitiesCompleted.length || 0;
     }
 

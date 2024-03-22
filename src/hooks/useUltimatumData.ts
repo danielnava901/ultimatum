@@ -13,7 +13,7 @@ const initData = {
     flyingToNZDate: ''
 };
 
-export default function useUltimatumData() {
+export default function useUltimatumData({loading} : any) {
     const [activitiesTotalWeek, setActivitiesTotalWeek] = useState(7);
     const [__result, setResult] = useState(initData);
     const [days, setDays] = useState([]);
@@ -75,8 +75,10 @@ export default function useUltimatumData() {
     }
 
     useEffect(() => {
-        getData()
-    }, []);
+        if(!loading) {
+            getData()
+        }
+    }, [loading]);
 
 
     return [{

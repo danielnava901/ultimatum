@@ -6,7 +6,8 @@ export const setActivityDayRequest = async (
         body: JSON.stringify({
             day,
             activityTypeId
-        })
+        }),
+
     });
     let {data: {data}} : any = await response.json();
 }

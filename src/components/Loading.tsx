@@ -12,15 +12,15 @@ const Loading = ({show} : {show: boolean}) => {
         items-center
         fixed
     " style={{zIndex: 100, width: "inherit"}}>
-        <div className="w-48
-        h-48
-        bg-gray-400
-        border
-        border-gray-200
+        <div className="
         flex
         justify-center
-        items-center">
-            Cargando
+        items-center relative">
+            <div className="lds-facebook">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </div> : <>
 

@@ -1,5 +1,5 @@
 "use client"
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {Panel} from "./Panel";
 import Loading from "@/components/Loading";
 import {PanelContext} from "@/context/PanelContext";
@@ -10,16 +10,8 @@ import UltimatumSummary from "@/app/ultimatum/UltimatumSummary";
 import useUltimatumData from "@/hooks/useUltimatumData";
 
 export default function UltimatumWrapper() {
-    const {loading} = useContext(PanelContext);
-    const [ultimatumData, setUltimatumData] = useUltimatumData();
-
-    useEffect(() => {
-        if(!loading) {
-            setUltimatumData();
-        }
-    }, [loading]);
-
-    const {
+    const {loading} : any = useContext(PanelContext);
+    const [{
         todayText,
         startEFDateDayOfYear,
         daysArray,
@@ -34,7 +26,8 @@ export default function UltimatumWrapper() {
         activitiesTotalWeek,
         totalWeek,
         showOnly
-    } = ultimatumData;
+    }] = useUltimatumData({loading});
+
 
 
     return <div
