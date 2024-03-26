@@ -8,6 +8,7 @@ import {Day} from "@/app/ultimatum/Day";
 import ProcessBar from "@/app/ultimatum/ProcessBar";
 import UltimatumSummary from "@/app/ultimatum/UltimatumSummary";
 import useUltimatumData from "@/hooks/useUltimatumData";
+import Wrapper from "@/components/Wrapper";
 
 export default function UltimatumWrapper() {
     const {loading} : any = useContext(PanelContext);
@@ -30,17 +31,7 @@ export default function UltimatumWrapper() {
 
 
 
-    return <div
-            className="
-            w-[100vw]
-            h-[100vh]
-            text-[0.9rem]
-            lg:text-md
-            relative
-            fira-mono-medium
-            relative
-            "
-        style={{zIndex: 9}}>
+    return <Wrapper>
         <ProcessBar
             daysArray={daysArray}
             daysIndex={daysIndex}
@@ -60,7 +51,7 @@ export default function UltimatumWrapper() {
             flyingToNZDate={flyingToNZDate}
         />
 
-        <div className="w-full flex flex-wrap justify-between md:justify-start">
+        <div className="w-full flex flex-wrap justify-between">
             {
                 daysArray.map((dayActivities: any, index : number) => {
                     let realIndex = index + 1;
@@ -125,5 +116,5 @@ export default function UltimatumWrapper() {
         </div>
         <Panel/>
         <Loading show={loading} />
-    </div>
+    </Wrapper>
 }

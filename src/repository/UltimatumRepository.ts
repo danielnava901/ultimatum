@@ -44,7 +44,8 @@ export const setActivityRepository = async (day_num: number, activity_type_id: n
     let {data} = await getActivitiesByDayAndActivityRepository(day_num, activity_type_id);
 
     if(data) {
-        await supabaseClient.from("dnv_activity")
+        await supabaseClient
+            .from("dnv_activity")
             .delete()
             .eq('id', data.id)
         ;
@@ -98,28 +99,6 @@ export const getUltimatumDataRepository = async () => {
 
          return dayObj;
     });
-
-    activities.map((activityPerDay: any, index: number) => {
-
-        let dayMap = daysArray[activityPerDay.day_num - 1];
-        let dayNotes = noteMap.has(activityPerDay.day_num) ? noteMap.get(activityPerDay.day_num) : []
-
-        if(dayMap !== 0) {
-            let mapi = dayMap[activityPerDay.day_num]["act"];
-            dayMap[activityPerDay.day_num]["act"] = [...mapi, activityPerDay.activity_type_id];
-            dayMap[activityPerDay.day_num]["notes"] = dayNotes;
-
-        }else {
-            dayMap = {};
-
-            dayMap[activityPerDay.day_num] = {
-                act: [activityPerDay.activity_type_id],
-                notes: dayNotes
-            };
-            daysArray[activityPerDay.day_num - 1] = dayMap;
-        }
-    });
-
 
     return {
         todayText,
